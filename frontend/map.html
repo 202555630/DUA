@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dd88b9ca50995197b849e4ed9948edd1"></script>
+  <style>
+    /* 정보창(말풍선) 꾸미기 */
+    .info-window {
+      padding: 10px;
+      font-size: 13px;
+      line-height: 1.5;
+      min-width: 150px;
+    }
+    .info-title {
+      font-weight: bold;
+      font-size: 14px;
+      color: #0369a1;
+      margin-bottom: 5px;
+    }
+    .info-category {
+      color: #64748b;
+      font-size: 11px;
+    }
+  </style>
+</head>
+<body>
+  <div id="map" style="width:100%; height:700px;"></div>
+
+  <script>
+    var mapContainer = document.getElementById('map');
+    var mapOption = {
+        center: new kakao.maps.LatLng(35.1587, 129.1604), // 광안리
+        level: 5 
+    };
+    var map = new kakao.maps.Map(mapContainer, mapOption);
+
+    // 1. 백엔드에서 데이터 가져오기
+    fetch('http://localhost:8080/api/locations')
+        .then(response => response.json())
+        .then(data => {
+            // 2. 데이터 반복하며 마커 찍기
+            data.forEach(location => {
+                // 🔥 여기가 핵심! 스프레드시트에 적힌 글자(띄어쓰기, 괄호)와 완벽히 일치해야 합니다.
+                var lat = location['latitude (위도)'];
+                var lng = location['longitude (경도)'];
+                var name = location['name (이름)'];
+                var category = location['category (카테고리)'];
+
+                // 좌표 데이터가 없는 빈칸은 건너뛰기
+                if (!lat || !lng) return; 
+
+                var markerPosition  = new kakao.maps.LatLng(parseFloat(lat), parseFloat(lng)); 
+                var marker = new kakao.maps.Marker({ position: markerPosition });
+                
+                marker.setMap(map);
+
+                // 마커 클릭 시 보여줄 말풍선 내용 (HTML)
+                var iwContent = `
+                  <div class="info-window">
+                    <div class="info-title">${name}</div>
+                    <div class="info-category">${category || ''}</div>
+                  </div>
+                `;
+                var infowindow = new kakao.maps.InfoWindow({ content : iwContent });
+                
+                // 마커에 마우스 올리면 말풍선 열기
+                kakao.maps.event.addListener(marker, 'mouseover', function() {
+                    infowindow.open(map, marker);
+                });
+                
+                // 마커에서 마우스 내리면 말풍선 닫기
+                kakao.maps.event.addListener(marker, 'mouseout', function() {
+                    infowindow.close();
+                });
+            });
+        })
+        .catch(error => console.error('백엔드 데이터 가져오기 실패:', error));
+  </script>
+</body>
+</html>
