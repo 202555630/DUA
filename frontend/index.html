@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passport - 부산 지하철 여행 검색</title>
+    <!-- 외부 스타일시트 연결 -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="section-box">
+            <div class="title-text">DUA</div>
+            <div class="title-small-text">어디로든 떠나고 싶은 순간, 부산이 답합니다.</div>
+        </div>
+
+        <div class="section-box">
+            <div class="region-select-wrapper">
+                <select class="region-select">
+                    <option value="" disabled selected>지역 선택</option>
+                    <option value="gwangalli">광안리</option>
+                    <option value="haeundae">해운대</option>
+                    <option value="seomyeon">서면</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="section-box">
+            <div class="section-title">동행 유형 선택</div>
+            <div class="options-wrapper">
+                <div class="option-card" onclick="selectOption(this)">
+                    <div class="option-text">가족</div>
+                </div>
+                <div class="option-card" onclick="selectOption(this)">
+                    <div class="option-text">연인</div>
+                </div>
+                <div class="option-card" onclick="selectOption(this)">
+                    <div class="option-text">친구</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-box">
+            <div class="section-title">날씨 선택</div>
+            <div class="options-wrapper">
+                <div class="option-card" onclick="selectOption(this)">
+                    <div class="option-text">맑음</div>
+                </div>
+                <div class="option-card" onclick="selectOption(this)">
+                    <div class="option-text">비</div>
+                </div>
+                <div class="option-card" onclick="selectOption(this)">
+                    <div class="option-text">폭염</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="search-container">
+            <button class="search-btn" onclick="this.classList.toggle('selected')">
+                검색
+                <div class="search-icon-box">🔍</div>
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        function selectOption(element) {
+            // 클릭된 요소가 속한 줄(options-wrapper) 안의 모든 option-card를 찾음
+            const siblings = element.parentElement.querySelectorAll('.option-card');
+            
+            // 같은 줄에 있는 모든 카드의 선택 상태를 초기화
+            siblings.forEach(card => card.classList.remove('selected'));
+            
+            // 내가 클릭한 카드에만 selected 상태 부여
+            element.classList.add('selected');
+        }
+    </script>
+</body>
+</html>

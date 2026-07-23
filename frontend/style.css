@@ -1,0 +1,164 @@
+/* 폰트 설정 */
+@font-face {
+    font-family: 'Paperozi';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-5Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'OkMallangW';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2603-1@1.0/OkMallangW-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Ridibatang';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff') format('woff');
+    font-weight: normal;
+    font-display: swap;
+}
+
+/* 전체 페이지 기본 설정 */
+body {
+    font-family: 'Ridibatang';
+    font-weight: normal;
+    display: flex;
+    justify-content: center;
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 0;
+}
+
+/* 전체 틀을 감싸는 컨테이너 */
+.container {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* 1. 제목 영역 */
+.title-text {
+    font-family: 'OkMallangW';
+    font-weight: 500;
+    font-size: 60px;
+    color: #333;
+}
+
+.title-small-text {
+    font-family: 'Ridibatang', sans-serif;
+    font-weight: normal;
+    font-size: 16px;
+    color: #666;
+    margin-top: 10px;
+}
+
+/* 2. 지역 선택 영역 */
+.region-select-wrapper {
+    position: relative;
+    width: 60%;
+    margin: 0 auto;
+}
+
+.region-select {
+    font-family: 'Ridibatang', serif;
+    font-size: 20px;
+    color: #333;
+    padding: 12px 30px 12px 10px;
+    width: 100%;
+    text-align: center;
+    text-align-last: center;
+    border: none;
+    border-bottom: 1.5px solid #b3b3b3;
+    outline: none;
+    cursor: pointer;
+    background-color: transparent;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+/* 드롭다운 화살표(v) */
+.region-select-wrapper::after {
+    content: '';
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid #333;
+    border-bottom: 2px solid #333;
+    transform: translateY(-65%) rotate(45deg);
+    pointer-events: none;
+}
+
+.region-select:hover {
+    border-bottom-color: #333;
+    transition: border-color 0.2s ease;
+}
+
+/* 3 & 4. 동행 유형 & 날씨 선택 공통 스타일 */
+.section-title {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.options-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.option-card {
+    flex: 1;
+    border: 6px solid #b8e5ff; 
+    background-color: #b8e5ff;
+    padding: 20px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.option-card:hover,
+.option-card.selected {
+    background-color: #ffffff;
+}
+
+.option-text {
+    font-size: 16px;
+    color: #333;
+}
+
+/* 5. 검색 버튼 영역 */
+.search-container {
+    display: flex;
+    justify-content: center;
+}
+
+.search-btn {
+    font-family: 'Ridibatang', sans-serif;
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    width: 50%;
+    padding: 15px;
+    border: 4px solid #b8e5ff;
+    background-color: #ffffff;
+    font-size: 22px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.search-btn:hover {
+    background-color: #f5fbff;
+}
+
+.search-btn.selected {
+    background-color: #dff0ff;
+}
