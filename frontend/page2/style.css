@@ -49,8 +49,15 @@ body {
 
 /* 2. 지도 API 영역 */
 .map-box {
-    height: auto; /* 내부 지도 높이에 맞추기 위해 임시 높이 수정 */
-    padding: 0; /* 지도가 꽉 차도록 패딩 제거 */
+    padding: 0;
+    overflow: hidden;
+}
+
+.map-iframe {
+    width: 100%;
+    height: 400px;
+    border: none;
+    display: block;
 }
 
 /* 3. 코스 추천 영역 */
@@ -208,107 +215,3 @@ body {
     transform: scale(1.1);
 }
 
-/* =========================================
-   [새로 추가됨] 팀원의 map.css 병합 부분
-========================================= */
-.map-container {
-    width: 100%;       /* 모바일 전체 폭을 채우거나 */
-    max-width: 700px;  /* 최대 너비를 제한했을 때 화면 가운데로 가도록 설정 */
-    height: 400px;
-    
-    /* [핵심] 상하 마진은 15px 주되, 좌우 마진을 auto로 설정! */
-    margin: 15px auto; 
-    
-    border: 2px solid #c9d9fb;
-    border-radius: 8px;
-    box-sizing: border-box;
-    position: relative;
-    overflow: hidden;
-    background-color: #f9f9f9;
-}
-
-/* API 연결 전 보여줄 가상 지도 배경 */
-.mock-map-bg {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #aaa;
-    font-weight: bold;
-    font-size: 18px;
-    letter-spacing: 1px;
-    background-image: linear-gradient(#e5e5e5 1px, transparent 1px), 
-                      linear-gradient(90deg, #e5e5e5 1px, transparent 1px);
-    background-size: 20px 20px; /* 모눈종이 느낌으로 지도 그리드 흉내내기 */
-}
-
-/* 가상 마커(핀) 스타일 */
-.mock-marker {
-    position: absolute;
-    width: 24px;
-    height: 24px;
-    background-color: #ff4757; /* 붉은색 핀 */
-    border-radius: 50% 50% 50% 0;
-    transform: rotate(-45deg);
-    margin-left: -12px;
-    margin-top: -24px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: -1px 2px 4px rgba(0,0,0,0.3);
-    transition: all 0.3s ease; /* 이동할 때 부드럽게 슥 움직이도록 */
-}
-
-/* 마커 내부의 숫자나 점 */
-.mock-marker::after {
-    content: '';
-    width: 10px;
-    height: 10px;
-    background-color: white;
-    border-radius: 50%;
-}
-
-/* 마커 말풍선(인포윈도우) */
-.mock-infowindow {
-    position: absolute;
-    background: white;
-    border: 1px solid #ccc;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 11px;
-    font-weight: bold;
-    white-space: nowrap;
-    transform: translate(-50%, -55px); /* 마커 위쪽으로 배치 */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-/* 5. 검색 버튼 영역 */
-.course-selection-container {
-    display: flex;
-    justify-content: center;
-}
-
-.course-selection-btn {
-    font-family: 'Ridibatang', sans-serif;
-    font-weight: normal;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    width: 50%;
-    padding: 15px;
-    border: 4px solid #b8e5ff;
-    background-color: #ffffff;
-    font-size: 22px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.course-selection-btn:hover {
-    background-color: #f5fbff;
-}
-
-.course-selection-btn.selected {
-    background-color: #dff0ff;
-}
