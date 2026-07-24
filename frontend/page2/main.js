@@ -69,3 +69,57 @@ function displayCourseMarkers(courseList) {
         mapContainer.appendChild(infowindow);
     });
 }
+
+/* =========================================
+   백엔드 추천 코스 불러오기
+========================================= */
+
+async function loadCourse() {
+    try {
+        // 이전 페이지에서 선택한 값 가져오기 (없으면 기본값)
+        const companion = localStorage.getItem("companion") || "연인";
+        const weather = localStorage.getItem("weather") || "맑음";
+
+        const res = await fetch(
+            `http://localhost:8080/api/recommend-course?companion=${encodeURIComponent(companion)}&weather=${encodeURIComponent(weather)}`
+        );
+
+        if (!res.ok) {
+            throw new Error("추천 데이터를 가져오지 못했습니다.");
+        }
+
+        const data = await res.json();
+
+        const course = data.course;
+
+        document.getElementById("spot1").innerText =
+            course[0]?.name || "추천 장소 없음";
+
+        document.getElementById("spot2").innerText =
+            course[1]?.name || "추천 장소 없음";
+
+        document.getElementById("spot3").innerText =
+            course[2]?.name || "추천 장소 없음";
+
+        // 지도 마커도 같이 표시(좌표가 있다면)
+        if (typeof displayCourseMarkers === "function") {
+            const markerData = course.map(place => ({
+                name: place.name,
+                x: place.longitude || 50,
+                y: place.latitude || 50
+            }));
+
+            displayCourseMarkers(markerData);
+        }
+
+    } catch (err) {
+        console.error(err);
+
+        document.getElementById("spot1").innerText = "불러오기 실패";
+        document.getElementById("spot2").innerText = "-";
+        document.getElementById("spot3").innerText = "-";
+    }
+}
+
+// 페이지가 열리면 자동 실행
+document.addEventListener("DOMContentLoaded", loadCourse);

@@ -7,78 +7,86 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <div class="container">
+<div class="container">
 
-        <!-- 페이지 제목 -->
-        <div class="box-frame title-box">
-            <span id="dynamic-region-name">부산</span> 추천 코스
-        </div>
+    <div class="box-frame title-box">
+        <span id="dynamic-region-name">부산</span> 추천 코스
+    </div>
 
     <div class="box-frame map-box">
         <iframe
             src="../map.html"
             class="map-iframe"
-            title="추천 코스 지도"
-        ></iframe>
+            title="추천 코스 지도">
+        </iframe>
     </div>
 
-        <!-- 코스 추천 영역 -->
-        <section>
-            <div class="course-title">&lt; 코스 추천 &gt;</div>
+    <section>
 
-            <div class="tab-container">
-                <div class="tab-menu">
-                    <div class="tab-item active">①</div>
-                    <div class="tab-item">②</div>
-                    <div class="tab-item">③</div>
-                </div>
+        <div class="course-title">&lt; 코스 추천 &gt;</div>
 
-                <!-- 첫 번째 코스 -->
-                <div class="tab-content active">
-                    <div class="timeline-container">
-                        <div class="timeline-track">
-                            <div class="spot">
-                                <div class="spot-circle">1</div>
-                                <p class="spot-name">광안리 해수욕장</p>
-                            </div>
+        <div class="tab-container">
 
-                            <div class="spot">
-                                <div class="spot-circle">2</div>
-                                <p class="spot-name">민락 수변공원</p>
-                            </div>
+            <div class="tab-menu">
+                <div class="tab-item active">①</div>
+                <div class="tab-item">②</div>
+                <div class="tab-item">③</div>
+            </div>
 
-                            <div class="spot">
-                                <div class="spot-circle">3</div>
-                                <p class="spot-name">광안대교 야경 감상</p>
-                            </div>
+            <div class="tab-content active">
+
+                <div class="timeline-container">
+
+                    <div class="timeline-track">
+
+                        <div class="spot">
+                            <div class="spot-circle">1</div>
+                            <p class="spot-name" id="spot1">불러오는 중...</p>
                         </div>
+
+                        <div class="spot">
+                            <div class="spot-circle">2</div>
+                            <p class="spot-name" id="spot2">불러오는 중...</p>
+                        </div>
+
+                        <div class="spot">
+                            <div class="spot-circle">3</div>
+                            <p class="spot-name" id="spot3">불러오는 중...</p>
+                        </div>
+
                     </div>
+
                 </div>
 
-                <!-- 두 번째 코스 -->
-                <div class="tab-content">
-                    <div class="timeline-container">
-                        <p>▶ 두 번째 코스 준비 중...</p>
-                    </div>
-                </div>
+            </div>
 
-                <!-- 세 번째 코스 -->
-                <div class="tab-content">
-                    <div class="timeline-container">
-                        <p>▶ 세 번째 코스 준비 중...</p>
-                    </div>
+            <div class="tab-content">
+                <div class="timeline-container">
+                    <p>▶ 두 번째 코스 준비 중...</p>
                 </div>
             </div>
-            <div>
-            <div class="course-selection-container">
-            <button class="course-selection-btn" onclick="this.classList.toggle('selected')">
+
+            <div class="tab-content">
+                <div class="timeline-container">
+                    <p>▶ 세 번째 코스 준비 중...</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="course-selection-container">
+            <button class="course-selection-btn"
+                    onclick="this.classList.toggle('selected')">
                 코스 선택
                 <div class="course-selection-icon-box">✔️</div>
             </button>
-            </div>
-        </section>
-    </div>
+        </div>
 
-    <script src="./main.js"></script>
+    </section>
+
+</div>
+
+<script src="./main.js"></script>
+
 </body>
 </html>
