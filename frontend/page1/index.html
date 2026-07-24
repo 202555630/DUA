@@ -20,12 +20,12 @@
 
         <div class="section-box">
             <div class="region-select-wrapper">
-                <select class="region-select">
-                    <option value="" disabled selected>지역 선택</option>
-                    <option value="gwangalli">광안리</option>
-                    <option value="haeundae">해운대</option>
-                    <option value="seomyeon">서면</option>
-                </select>
+        <select class="region-select" id="region-select">
+        <option value="" disabled selected>지역 선택</option>
+        <option value="광안리">광안리</option>
+        <option value="해운대">해운대</option>
+        <option value="서면">서면</option>
+    </select>
             </div>
         </div>
 
@@ -60,25 +60,47 @@
         </div>
 
         <div class="search-container">
-            <button class="search-btn" onclick="window.location.href='../page2/index.html'">
+            <button class="search-btn" type="button" onclick="goToPage2()">
              검색
               <div class="search-icon-box">🔍</div>
             </button>
         </div>
 
     </div>
-
     <script>
-        function selectOption(element) {
-            // 클릭된 요소가 속한 줄(options-wrapper) 안의 모든 option-card를 찾음
-            const siblings = element.parentElement.querySelectorAll('.option-card');
-            
-            // 같은 줄에 있는 모든 카드의 선택 상태를 초기화
-            siblings.forEach(card => card.classList.remove('selected'));
-            
-            // 내가 클릭한 카드에만 selected 상태 부여
-            element.classList.add('selected');
+    function selectOption(element) {
+        // 클릭한 카드와 같은 줄에 있는 모든 카드 찾기
+        const siblings =
+            element.parentElement.querySelectorAll(".option-card");
+
+        // 기존 선택 상태 제거
+        siblings.forEach((card) => {
+            card.classList.remove("selected");
+        });
+
+        // 클릭한 카드에 선택 상태 추가
+        element.classList.add("selected");
+    }
+
+    function goToPage2() {
+        // 지역 선택 메뉴 가져오기
+        const regionSelect =
+            document.getElementById("region-select");
+
+        // 선택된 지역 이름
+        const selectedRegion = regionSelect.value;
+
+        // 지역을 선택하지 않은 경우
+        if (!selectedRegion) {
+            alert("지역을 선택해주세요.");
+            return;
         }
-    </script>
+
+        // 선택한 지역을 주소에 포함해 2페이지로 이동
+        window.location.href =
+            `../page2/index.html?region=${encodeURIComponent(selectedRegion)}`;
+    }
+</script>
+
 </body>
 </html>
