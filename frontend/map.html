@@ -33,47 +33,132 @@
     };
     var map = new kakao.maps.Map(mapContainer, mapOption);
 
-    // 1. 백엔드에서 데이터 가져오기
     fetch('http://localhost:8080/api/locations')
-        .then(response => response.json())
-        .then(data => {
-            // 2. 데이터 반복하며 마커 찍기
-            data.locations.forEach(location => {
-                // 🔥 여기가 핵심! 스프레드시트에 적힌 글자(띄어쓰기, 괄호)와 완벽히 일치해야 합니다.
-                var lat = location.latitude;
-                var lng = location.longitude;
-                var name = location.name;
-                var category = location.category;
+      .then(response => response.json())
+      .then(data => {
+        data.locations.forEach(location => {
 
-                // 좌표 데이터가 없는 빈칸은 건너뛰기
-                if (!lat || !lng) return; 
+            var lat = location.latitude;
+            var lng = location.longitude;
+            var name = location.name;
+            var category = location.category;
 
-                var markerPosition  = new kakao.maps.LatLng(parseFloat(lat), parseFloat(lng)); 
-                var marker = new kakao.maps.Marker({ position: markerPosition });
-                
-                marker.setMap(map);
+            if (!lat || !lng) return;
 
-                // 마커 클릭 시 보여줄 말풍선 내용 (HTML)
-                var iwContent = `
-                  <div class="info-window">
+            var markerPosition = new kakao.maps.LatLng(
+                parseFloat(lat),
+                parseFloat(lng)
+            );
+
+            var marker = new kakao.maps.Marker({
+                position: markerPosition
+            });
+
+            marker.setMap(map);
+
+            var iwContent = `
+                <div class="info-window">
                     <div class="info-title">${name}</div>
                     <div class="info-category">${category || ''}</div>
-                  </div>
-                `;
-                var infowindow = new kakao.maps.InfoWindow({ content : iwContent });
-                
-                // 마커에 마우스 올리면 말풍선 열기
-                kakao.maps.event.addListener(marker, 'mouseover', function() {
-                    infowindow.open(map, marker);
-                });
-                
-                // 마커에서 마우스 내리면 말풍선 닫기
-                kakao.maps.event.addListener(marker, 'mouseout', function() {
-                    infowindow.close();
-                });
+                </div>
+            `;
+
+            var infowindow = new kakao.maps.InfoWindow({
+                content: iwContent
             });
-        })
-        .catch(error => console.error('백엔드 데이터 가져오기 실패:', error));
+
+            kakao.maps.event.addListener(marker, 'mouseover', function () {
+                infowindow.open(map, marker);
+            });
+
+            kakao.maps.event.addListener(marker, 'mouseout', function () {
+                infowindow.close();
+            });
+
+        });
+    })
+    .catch(error => console.error('백엔드 데이터 가져오기 실패:', error));
+
+    const courseLines = [];
+
+    const courseColors = [
+      "#ef4444",
+      "#22c55e",
+      "#3b82f6"
+    ];
+
+    window.addEventListener("message",(event)=>{
+
+      const data = event.data;
+
+      if(data.type==="drawCourses"){
+          drawCourses(data.courses);
+      }
+
+      if(data.type==="highlight"){
+          highlightCourse(data.index);
+      }
+
+    });
+
+    function drawCourses(courses){
+      console.log(courses);
+
+      courseLines.forEach(line=>{
+          line.setMap(null);
+      });
+
+      courseLines.length=0;
+
+      courses.forEach((course,courseIndex)=>{
+        console.log("course", courseIndex, course);
+
+        let path=[];
+
+        course.forEach((spot,index)=>{
+            const position=new kakao.maps.LatLng(
+                parseFloat(spot.latitude),
+                parseFloat(spot.longitude)
+            );
+
+            path.push(position);
+        });
+
+        const line=new kakao.maps.Polyline({
+            path:path,
+            strokeWeight:5,
+            strokeColor:courseColors[courseIndex],
+            strokeOpacity:0.8,
+            strokeStyle:"solid"
+        });
+
+        line.setMap(map);
+        courseLines.push(line);
+      });
+
+      highlightCourse(0);
+    }
+
+    function highlightCourse(index){
+      // 선 색 변경
+      courseLines.forEach((line, i)=>{
+        if(i===index){
+          line.setOptions({
+            strokeColor: courseColors[i],
+            strokeOpacity: 0.9,
+            strokeWeight: 6
+          });
+
+        } else {
+            line.setOptions({
+              strokeColor: "#bdbdbd",
+              strokeOpacity: 0.5,
+              strokeWeight: 4
+          });
+        }
+      });
+    }
+    
   </script>
 </body>
 </html>

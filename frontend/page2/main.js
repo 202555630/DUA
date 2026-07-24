@@ -1,3 +1,5 @@
+let allCourses = [];
+
 document.addEventListener("DOMContentLoaded", () => {
     // 1페이지에서 URL로 전달한 필터값 가져오기
     const urlParams =
@@ -131,13 +133,33 @@ async function loadCourse(
         }
 
         const data = await response.json();
+        console.log(data);
 
-        const course =
-            Array.isArray(data.course)
-                ? data.course
+        const courses =
+            Array.isArray(data.courses)
+                ? data.courses
                 : [];
 
-        displayCourse(course);
+        console.log(courses);
+                
+        // 추가
+        allCourses = courses;
+
+        // 첫 번째 코스 표시
+        displayCourse(allCourses[0]);
+
+        const mapFrame =
+            document.getElementById("map-frame");
+
+        mapFrame.onload = () => {
+            mapFrame.contentWindow.postMessage(
+                {
+                    type: "drawCourses",
+                    courses: allCourses
+                },
+                "*"
+            );
+        };
 
         console.log("선택한 필터:", {
             region,
@@ -147,7 +169,7 @@ async function loadCourse(
 
         console.log(
             "백엔드 추천 결과:",
-            course
+            courses
         );
 
     } catch (error) {
@@ -241,52 +263,31 @@ function setupTabs() {
             ".tab-item"
         );
 
-    const tabContents =
-        document.querySelectorAll(
-            ".tab-content"
-        );
+    tabItems.forEach((tab, index) => {
+        tab.addEventListener("click", () => {
 
-    tabItems.forEach(
-        (tab, index) => {
-            tab.addEventListener(
-                "click",
-                () => {
-                    tabItems.forEach(
-                        (item) => {
-                            item.classList.remove(
-                                "active"
-                            );
-                        }
-                    );
+            tabItems.forEach((item) => {
+                item.classList.remove("active");
+            });
 
-                    tabContents.forEach(
-                        (content) => {
-                            content.classList.remove(
-                                "active"
-                            );
-                        }
-                    );
+            tab.classList.add("active");
 
-                    tab.classList.add(
-                        "active"
-                    );
+            if (allCourses[index]) {
+                displayCourse(allCourses[index]);
+            }
 
-                    if (
-                        tabContents[index]
-                    ) {
-                        tabContents[
-                            index
-                        ].classList.add(
-                            "active"
-                        );
-                    }
-
-                    console.log(
-                        "선택한 코스:",
-                        index + 1
-                    );
-                }
+            document
+                .getElementById("map-frame")
+                .contentWindow
+                .postMessage(
+                {
+                    type:"highlight",
+                    index:index
+                },
+                "*"
             );
-        }
-    );
+
+            console.log("선택한 코스:", index + 1);
+        });
+    });
 }

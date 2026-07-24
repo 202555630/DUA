@@ -101,6 +101,10 @@ async function loadData(): Promise<void> {
                 row['category (카테고리)'],
             ),
 
+            address: String(
+                row['address (주소)'] ?? '',
+            ).trim(),
+
             latitude: Number(
                 row['latitude (위도)'],
             ),
@@ -185,8 +189,10 @@ function getDistance(
  * 식당 → 카페 → 소품샵 코스를 생성한다.
  */
 function generateCourse(
+    region: string,
     companion: string,
     weather: string,
+    usedIds: Set<string>,
 ): any[] {
     if (!cachedLocations.length) {
         return [];
@@ -194,6 +200,9 @@ function generateCourse(
 
     const scoredLocations =
         cachedLocations
+            .filter((location) =>
+                location.address.includes(region)
+            )
             .map((location) => {
                 let score = 10;
 
@@ -458,9 +467,6 @@ function generateCourse(
 
 
     const course: any[] = [];
-    const selectedIds =
-        new Set<string>();
-
     const categoryOrder = [
         '식당',
         '카페',
@@ -475,7 +481,7 @@ function generateCourse(
                     (location) =>
                         location.category ===
                             category &&
-                        !selectedIds.has(
+                        !usedIds.has(
                             location.id,
                         ),
                 );
@@ -531,10 +537,19 @@ function generateCourse(
                 );
             }
 
-            const selected =
-                candidates[0];
+            const topCandidates =
+                candidates.slice(
+                0,
+                Math.min(candidates.length, 6)
+            );
 
-            selectedIds.add(
+            const randomIndex = Math.floor(
+                Math.random() * topCandidates.length
+            );
+
+            const selected = topCandidates[randomIndex];
+
+            usedIds.add(
                 selected.id,
             );
 
@@ -627,6 +642,11 @@ app.get(
             'string'
                 ? req.query.weather.trim()
                 : '';
+        
+        const region =
+            typeof req.query.region === 'string'
+                ? req.query.region.trim()
+                : '';
 
         const allowedCompanions = [
             '가족',
@@ -661,17 +681,33 @@ app.get(
         }
 
         try {
-            const course =
+            const usedIds = new Set<string>();
+
+            const courses = [
                 generateCourse(
+                    region,
                     companion,
                     weather,
-                );
+                    usedIds,
+                ),
+                generateCourse(
+                    region,
+                    companion,
+                    weather,
+                    usedIds,
+                ),
+                generateCourse(
+                    region,
+                    companion,
+                    weather,
+                    usedIds,
+                ),
+            ];
 
             res.json({
                 companion,
                 weather,
-                count: course.length,
-                course,
+                courses,
             });
         } catch (error) {
             console.error(
@@ -699,10 +735,6 @@ loadData()
             () => {
                 console.log(
                     `🚀 서버 실행 중: http://localhost:${PORT}`,
-                );
-
-                console.log(
-                    `📍 추천 API: http://localhost:${PORT}/api/recommend-course?companion=가족&weather=비`,
                 );
             },
         );
