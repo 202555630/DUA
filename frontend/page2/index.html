@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passport - 추천 코스</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="container">
+
+        <!-- 페이지 제목 -->
+        <div class="box-frame title-box">
+            <span id="dynamic-region-name">부산</span> 추천 코스
+        </div>
+
+        <!-- 지도 영역 -->
+        <div class="box-frame map-box">
+            <div class="map-container">
+                <div class="mock-map-bg">지도 영역</div>
+            </div>
+        </div>
+
+        <!-- 코스 추천 영역 -->
+        <section>
+            <div class="course-title">&lt; 코스 추천 &gt;</div>
+
+            <div class="tab-container">
+                <div class="tab-menu">
+                    <div class="tab-item active">①</div>
+                    <div class="tab-item">②</div>
+                    <div class="tab-item">③</div>
+                </div>
+
+                <!-- 첫 번째 코스 -->
+                <div class="tab-content active">
+                    <div class="timeline-container">
+                        <div class="timeline-track">
+                            <div class="spot">
+                                <div class="spot-circle">1</div>
+                                <p class="spot-name">광안리 해수욕장</p>
+                            </div>
+
+                            <div class="spot">
+                                <div class="spot-circle">2</div>
+                                <p class="spot-name">민락 수변공원</p>
+                            </div>
+
+                            <div class="spot">
+                                <div class="spot-circle">3</div>
+                                <p class="spot-name">광안대교 야경 감상</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 두 번째 코스 -->
+                <div class="tab-content">
+                    <div class="timeline-container">
+                        <p>▶ 두 번째 코스 준비 중...</p>
+                    </div>
+                </div>
+
+                <!-- 세 번째 코스 -->
+                <div class="tab-content">
+                    <div class="timeline-container">
+                        <p>▶ 세 번째 코스 준비 중...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="./main.js"></script>
+</body>
+</html>

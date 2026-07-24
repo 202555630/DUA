@@ -1,0 +1,285 @@
+/* 1페이지와 동일한 폰트 불러오기 */
+@font-face {
+    font-family: 'OkMallangW';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2603-1@1.0/OkMallangW-Regular.woff2') format('woff2');
+    font-weight: normal;
+}
+@font-face {
+    font-family: 'Ridibatang';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff') format('woff');
+    font-weight: normal;
+}
+
+/* 1페이지와 동일한 배경 설정 (경계선 없음) */
+body {
+    font-family: 'Ridibatang', serif;
+    display: flex;
+    justify-content: center;
+    background-color: #ffffff; /* 하얀색 배경으로 통일 */
+    padding: 20px;
+    margin: 0;
+}
+
+/* 전체 뼈대 컨테이너 */
+.container {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* 공통 테두리 박스 (1페이지의 하늘색 통일) */
+.box-frame {
+    border: 4px solid #b8e5ff; 
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 1. 상단 타이틀 영역 */
+.title-box {
+    font-family: 'OkMallangW', sans-serif;
+    font-size: 32px;
+    color: #333;
+}
+
+/* 2. 지도 API 영역 */
+.map-box {
+    height: auto; /* 내부 지도 높이에 맞추기 위해 임시 높이 수정 */
+    padding: 0; /* 지도가 꽉 차도록 패딩 제거 */
+}
+
+/* 3. 코스 추천 영역 */
+.course-title {
+    font-size: 22px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* 코스 추천 빈 껍데기 박스 */
+.course-empty-box {
+    height: 200px; /* 팀원이 내용을 넣을 임시 높이 */
+    border: 4px solid #b8e5ff; /* 하늘색 테두리 */
+}
+.tab-container {
+    border: 2px solid #333333;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #ffffff;
+    width: 100%;
+}
+
+/* 상단 버튼들이 들어가는 영역 */
+.tab-menu {
+    display: flex;
+    background-color: #f5f5f5;
+    border-bottom: 2px solid #333333;
+}
+
+/* 개별 탭 버튼 (기본 상태 - 비활성화) */
+.tab-item {
+    flex: 1;
+    padding: 12px 10px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1rem;
+    color: #888888;
+    cursor: pointer;
+    border-right: 2px solid #333333;
+    transition: all 0.2s ease-in-out;
+}
+
+/* 마지막 버튼의 오른쪽 테두리는 제거 */
+.tab-item:last-child {
+    border-right: none;
+}
+
+/* 탭 버튼 마우스 오버 효과 */
+.tab-item:hover {
+    background-color: #ebebeb;
+}
+
+/* 개별 탭 버튼 (활성화 상태 - 클릭됨) */
+.tab-item.active {
+    background-color: #ffffff;
+    color: #333333;
+    border-bottom: 2px solid #ffffff; /* 하단 선을 덮어서 본문과 이어지게 만듦 */
+    margin-bottom: -2px; /* 디자인 어긋남 방지용 */
+}
+
+/* 탭 내부 콘텐츠 영역 (기본적으로 숨김) */
+.tab-content {
+    display: none; /* 화면에서 안 보이게 처리 */
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+/* 탭 내부 콘텐츠 영역 (활성화 시 보임) */
+.tab-content.active {
+    display: block; /* 활성화된 탭의 내용만 화면에 표시 */
+    animation: fadeIn 0.3s ease; /* 부드럽게 나타나는 효과 추가 */
+}
+
+/* 자연스러운 전환을 위한 페이드인 애니메이션 */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.timeline-container {
+    width: 100%;
+    border: 4px solid #b8e5ff;
+    border-radius: 8px;
+    background-color: #ffffff;
+    padding: 30px 20px;
+    box-sizing: border-box;
+    box-shadow: 4px 4px 0px #b8e5ff; 
+}
+
+/* 2. 세로로 나열하는 뼈대 */
+.timeline-track {
+    display: flex;
+    flex-direction: column; /* 세로 방향으로 나열 */
+}
+
+.spot {
+    display: flex;
+    flex-direction: row; /* 무조건 옆으로 나란히! */
+    align-items: center; /* 수직 중앙 정렬 */
+    gap: 15px; /* 원과 글자 사이 간격 */
+    padding-bottom: 40px; /* 다음 줄과의 간격 */
+    position: relative;
+}
+
+/* 마지막 장소는 아래 여백 없앰 */
+.spot:last-child {
+    padding-bottom: 0;
+}
+
+/* 4. 장소와 장소를 이어주는 세로 선 */
+.spot:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 22.5px; /* 45px 원의 정확히 한가운데 */
+    top: 45px; /* 원의 맨 아래에서 시작 */
+    bottom: 0;
+    width: 3px;
+    background-color:  #b8e5ff;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+/* 5. 스케치 느낌의 동그라미 번호표 */
+.spot-circle {
+    width: 45px;
+    height: 45px;
+    border: 3px solid  #b8e5ff;
+    border-radius: 50%;
+    background-color: #b8e5ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffffff;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 2; /* 세로 선보다 위로 올라오게 */
+    flex-shrink: 0; /* 글자가 길어져도 찌그러짐 방지 */
+    transition: all 0.2s ease;
+}
+
+/* 6. 장소 이름 텍스트 */
+.spot-name {
+    font-size: 18px;
+    color: #333;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* 7. 마우스 올렸을 때 귀여운 액션 */
+.spot:hover .spot-circle {
+    background-color: #ffffff; /* 하늘색으로 변경 */
+    color: #6c6c6c; 
+    border-color: #b8e5ff;
+    transform: scale(1.1);
+}
+
+/* =========================================
+   [새로 추가됨] 팀원의 map.css 병합 부분
+========================================= */
+.map-container {
+    width: 100%;       /* 모바일 전체 폭을 채우거나 */
+    max-width: 700px;  /* 최대 너비를 제한했을 때 화면 가운데로 가도록 설정 */
+    height: 400px;
+    
+    /* [핵심] 상하 마진은 15px 주되, 좌우 마진을 auto로 설정! */
+    margin: 15px auto; 
+    
+    border: 2px solid #c9d9fb;
+    border-radius: 8px;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+    background-color: #f9f9f9;
+}
+
+/* API 연결 전 보여줄 가상 지도 배경 */
+.mock-map-bg {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #aaa;
+    font-weight: bold;
+    font-size: 18px;
+    letter-spacing: 1px;
+    background-image: linear-gradient(#e5e5e5 1px, transparent 1px), 
+                      linear-gradient(90deg, #e5e5e5 1px, transparent 1px);
+    background-size: 20px 20px; /* 모눈종이 느낌으로 지도 그리드 흉내내기 */
+}
+
+/* 가상 마커(핀) 스타일 */
+.mock-marker {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background-color: #ff4757; /* 붉은색 핀 */
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    margin-left: -12px;
+    margin-top: -24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: -1px 2px 4px rgba(0,0,0,0.3);
+    transition: all 0.3s ease; /* 이동할 때 부드럽게 슥 움직이도록 */
+}
+
+/* 마커 내부의 숫자나 점 */
+.mock-marker::after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    border-radius: 50%;
+}
+
+/* 마커 말풍선(인포윈도우) */
+.mock-infowindow {
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: bold;
+    white-space: nowrap;
+    transform: translate(-50%, -55px); /* 마커 위쪽으로 배치 */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
