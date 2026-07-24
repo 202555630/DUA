@@ -283,3 +283,32 @@ body {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
+/* 5. 검색 버튼 영역 */
+.course-selection-container {
+    display: flex;
+    justify-content: center;
+}
+
+.course-selection-btn {
+    font-family: 'Ridibatang', sans-serif;
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    width: 50%;
+    padding: 15px;
+    border: 4px solid #b8e5ff;
+    background-color: #ffffff;
+    font-size: 22px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.course-selection-btn:hover {
+    background-color: #f5fbff;
+}
+
+.course-selection-btn.selected {
+    background-color: #dff0ff;
+}
