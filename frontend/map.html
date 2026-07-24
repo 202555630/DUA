@@ -38,12 +38,12 @@
         .then(response => response.json())
         .then(data => {
             // 2. 데이터 반복하며 마커 찍기
-            data.forEach(location => {
+            data.locations.forEach(location => {
                 // 🔥 여기가 핵심! 스프레드시트에 적힌 글자(띄어쓰기, 괄호)와 완벽히 일치해야 합니다.
-                var lat = location['latitude (위도)'];
-                var lng = location['longitude (경도)'];
-                var name = location['name (이름)'];
-                var category = location['category (카테고리)'];
+                var lat = location.latitude;
+                var lng = location.longitude;
+                var name = location.name;
+                var category = location.category;
 
                 // 좌표 데이터가 없는 빈칸은 건너뛰기
                 if (!lat || !lng) return; 
